@@ -6,6 +6,11 @@ namespace Calaveras.Domain.Entities
 {
     public class ZipCodeDeliveryPrice: GenericEntity 
     {
+        public ZipCodeDeliveryPrice()
+        {
+            Orders = new List<Order>();
+        }
+        
         public int idzipcodemin { get; set; }
         public int idzipcodemax { get; set; }
         public string description { get; set; }

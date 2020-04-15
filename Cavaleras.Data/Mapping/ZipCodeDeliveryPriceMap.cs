@@ -11,26 +11,26 @@ namespace Cavaleras.Data.Mapping
     {
         public void Configure(EntityTypeBuilder<ZipCodeDeliveryPrice> builder)
         {
+
             builder.HasKey(x => x.id);
             builder.Property(x => x.id)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
             builder.Property(x => x.description)
-                .IsRequired(true)
+                .IsRequired()
                 .HasMaxLength(100);
 
-            builder.HasOne(x => x.ZipCodeMin)
-                .WithMany(x => x.ZipCodeDeliveryPrices)
-                .HasForeignKey(x => x.idzipcodemin)
-                .HasPrincipalKey(x => x.id)
+            builder.Property(x => x.price)
                 .IsRequired();
 
+            builder.HasOne(x => x.ZipCodeMin)
+                .WithMany(x => x.ZipCodeDeliveryPricesMin)
+                .HasForeignKey(x => x.idzipcodemin);
+            
             builder.HasOne(x => x.ZipCodeMax)
-                .WithMany(x => x.ZipCodeDeliveryPrices)
-                .HasForeignKey(x => x.idzipcodemax)
-                .HasPrincipalKey(x => x.id)
-                .IsRequired();
+                .WithMany(x => x.ZipCodeDeliveryPricesMax)
+                .HasForeignKey(x => x.idzipcodemax);
         }
     }
 }

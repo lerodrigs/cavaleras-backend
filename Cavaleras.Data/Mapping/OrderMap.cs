@@ -67,7 +67,7 @@ namespace Cavaleras.Data.Mapping
 
             builder.HasMany(x => x.OrderProduct)
                 .WithOne(x => x.Order)
-                .HasForeignKey(x => x.idorder);
+                .HasForeignKey(x => x.id);
         }
     }
 }

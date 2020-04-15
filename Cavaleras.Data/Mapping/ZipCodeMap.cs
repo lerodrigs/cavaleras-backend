@@ -19,6 +19,7 @@ namespace Cavaleras.Data.Mapping
             builder.Property(x => x.description)
                 .IsRequired()
                 .HasMaxLength(20);
+                
         }
     }
 }

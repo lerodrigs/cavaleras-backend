@@ -8,10 +8,12 @@ namespace Calaveras.Domain.Entities
     {
         public ZipCode()
         {
-            ZipCodeDeliveryPrices = new List<ZipCodeDeliveryPrice>();
+            ZipCodeDeliveryPricesMin = new List<ZipCodeDeliveryPrice>();
+            ZipCodeDeliveryPricesMax = new List<ZipCodeDeliveryPrice>();
         }
 
         public string description { get; set; }
-        public virtual ICollection<ZipCodeDeliveryPrice> ZipCodeDeliveryPrices { get; set; }
+        public virtual ICollection<ZipCodeDeliveryPrice> ZipCodeDeliveryPricesMin { get; set; }
+        public virtual ICollection<ZipCodeDeliveryPrice> ZipCodeDeliveryPricesMax { get; set; }
     }
 }
