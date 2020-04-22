@@ -5,3 +5,7 @@ COPY *.csproj ./
 WORKDIR /src
 RUN dotnet restore
 
+FROM build AS runtime
+WORKDIR /src
+COPY --from=build /src/out .
+ENTRYPOINT ["dotnet", "run", "--urls", "http://*:5000;http://*:5001"]
