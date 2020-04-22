@@ -1,0 +1,7 @@
+FROM microsoft/dotnet3.1-sdk as build 
+WORKDIR /src
+
+COPY *.csproj ./
+WORKDIR /src
+RUN dotnet restore
+
