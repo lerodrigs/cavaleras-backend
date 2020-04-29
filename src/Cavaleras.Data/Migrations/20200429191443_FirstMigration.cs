@@ -71,39 +71,6 @@ namespace Cavaleras.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(nullable: true),
-                    NormalizedUserName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    NormalizedEmail = table.Column<string>(nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    name = table.Column<string>(nullable: true),
-                    cpf = table.Column<string>(maxLength: 20, nullable: false),
-                    cellphone = table.Column<string>(maxLength: 15, nullable: false),
-                    zipcode = table.Column<string>(maxLength: 10, nullable: true),
-                    address = table.Column<string>(maxLength: 180, nullable: false),
-                    number = table.Column<string>(maxLength: 5, nullable: false),
-                    signature = table.Column<string>(maxLength: 9999, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ZipCodes",
                 columns: table => new
                 {
@@ -150,7 +117,15 @@ namespace Cavaleras.Data.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    name = table.Column<string>(nullable: true),
+                    cpf = table.Column<string>(nullable: true),
+                    zipcode = table.Column<string>(nullable: true),
+                    address = table.Column<string>(nullable: true),
+                    number = table.Column<string>(nullable: true),
+                    apto = table.Column<string>(nullable: true),
+                    signature = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -306,7 +281,7 @@ namespace Cavaleras.Data.Migrations
                 {
                     id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    idclient = table.Column<int>(nullable: false),
+                    idclient = table.Column<string>(nullable: false),
                     idstore = table.Column<int>(nullable: false),
                     idstatus = table.Column<int>(nullable: false),
                     iddeliveryman = table.Column<int>(nullable: false),
@@ -324,9 +299,10 @@ namespace Cavaleras.Data.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Orders_User_idclient",
+                        name: "FK_Orders_Users_idclient",
                         column: x => x.idclient,
-                        principalTable: "User",
+                        principalSchema: "auth",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -512,9 +488,6 @@ namespace Cavaleras.Data.Migrations
             migrationBuilder.DropTable(
                 name: "Users",
                 schema: "auth");
-
-            migrationBuilder.DropTable(
-                name: "User");
 
             migrationBuilder.DropTable(
                 name: "DeliveryMen");
