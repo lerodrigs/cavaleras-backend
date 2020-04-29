@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cavaleras.Data.Migrations
 {
     [DbContext(typeof(CavalerasDbContext))]
-    [Migration("20200415012914_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20200428225344_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -588,13 +588,13 @@ namespace Cavaleras.Data.Migrations
                     b.HasOne("Calaveras.Domain.Entities.ZipCode", "ZipCodeMax")
                         .WithMany("ZipCodeDeliveryPricesMax")
                         .HasForeignKey("idzipcodemax")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Calaveras.Domain.Entities.ZipCode", "ZipCodeMin")
                         .WithMany("ZipCodeDeliveryPricesMin")
                         .HasForeignKey("idzipcodemin")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cavaleras.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -175,14 +175,12 @@ namespace Cavaleras.Data.Migrations
                         name: "FK_ZipCodeDeliveryPrices_ZipCodes_idzipcodemax",
                         column: x => x.idzipcodemax,
                         principalTable: "ZipCodes",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_ZipCodeDeliveryPrices_ZipCodes_idzipcodemin",
                         column: x => x.idzipcodemin,
                         principalTable: "ZipCodes",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(

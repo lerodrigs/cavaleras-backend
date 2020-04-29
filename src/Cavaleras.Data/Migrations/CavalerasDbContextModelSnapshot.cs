@@ -586,13 +586,13 @@ namespace Cavaleras.Data.Migrations
                     b.HasOne("Calaveras.Domain.Entities.ZipCode", "ZipCodeMax")
                         .WithMany("ZipCodeDeliveryPricesMax")
                         .HasForeignKey("idzipcodemax")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Calaveras.Domain.Entities.ZipCode", "ZipCodeMin")
                         .WithMany("ZipCodeDeliveryPricesMin")
                         .HasForeignKey("idzipcodemin")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

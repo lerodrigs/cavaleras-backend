@@ -26,11 +26,13 @@ namespace Cavaleras.Data.Mapping
 
             builder.HasOne(x => x.ZipCodeMin)
                 .WithMany(x => x.ZipCodeDeliveryPricesMin)
-                .HasForeignKey(x => x.idzipcodemin);
+                .HasForeignKey(x => x.idzipcodemin)
+                .OnDelete(DeleteBehavior.NoAction);
             
             builder.HasOne(x => x.ZipCodeMax)
                 .WithMany(x => x.ZipCodeDeliveryPricesMax)
-                .HasForeignKey(x => x.idzipcodemax);
+                .HasForeignKey(x => x.idzipcodemax)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
