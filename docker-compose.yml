@@ -1,22 +1,19 @@
 version: '3'
 services:
-  app:
-    build:
-      context: .
-      dockerfile: docker/dockerfile.yml
-    image: cavaleras-backend-docker
+  api:
+    build: .
     ports:
-      - 5000:5000
+      - 8000:80
     environment:
       ASPNETCORE_ENVIRONMENT: Development # se quiser pode por essa variável de ambiente
     volumes:
-      - .:/src
+      - ${PWD}/api-container/:/var/lib/api/
     depends_on:
       - mssql
   mssql:
     image: microsoft/mssql-server-linux:2017-latest
-    ports:
-      - 11433:1433
+    volumes:
+      - ${PWD}/mssql-server/:/var/lib/mssql/    
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: cavaleras(!)cav@3215
+      SA_PASSWORD: cav@1324

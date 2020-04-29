@@ -11,5 +11,10 @@ namespace Cavaleras.Api.Controllers
     [ApiController]
     public class ZipCodeDeliveryPriceController : ControllerBase
     {
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok();
+        }
     }
 }

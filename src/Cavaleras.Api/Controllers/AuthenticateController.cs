@@ -12,20 +12,20 @@ namespace Cavaleras.Api.Controllers
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        public AuthenticateController() { }
+        //[HttpPost("token")]
+        //public IActionResult token([FromBody] AuthenticateDto authenticate)
+        //{
+        //    try
+        //    {
+        //        return Ok();
+        //    }
+        //    catch(Exception e)
+        //    {
+        //        return StatusCode(500, e.Message);
+        //    }
+        //}
 
-        public IActionResult post([FromBody] AuthenticateDto authenticate)
-        {
-            try
-            {
-                return Ok();
-            }
-            catch(Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
+        [HttpPost("register")]
         public IActionResult register([FromBody] RegisterUserDto registerDto)
         {
             try

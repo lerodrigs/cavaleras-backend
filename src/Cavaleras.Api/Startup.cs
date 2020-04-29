@@ -1,21 +1,14 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
-using Calaveras.Domain.Entities;
 using Cavaleras.CrossCutting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -92,7 +85,7 @@ namespace Cavaleras.Api
             DependencyInjectors.Inject(services);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<IdentityRole> roleManager, UserManager<User> userManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -103,15 +96,19 @@ namespace Cavaleras.Api
             app.UseAuthorization();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
+            app.UseSwaggerUI(c => 
+            { 
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            DbSeedInitializer.CreateRoles(roleManager);
-            DbSeedInitializer.CreateAdmin(userManager);
+            //DbSeedInitializer.CreateRoles(roleManager);
+            //DbSeedInitializer.CreateAdmin(userManager);
         }
     }
 }
