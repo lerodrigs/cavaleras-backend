@@ -1,37 +1,83 @@
-﻿using Calaveras.Domain.Interfaces.Repositories;
+﻿using Calaveras.Domain.Entities;
+using Cavaleras.Data.Context;
+using Cavaleras.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Cavaleras.Data.Repository
 {
-    public class GenericRepository: IGenericRepository
+    public class GenericRepository<T>: IGenericRepository<T> where T: GenericEntity
     {
-        public GenericRepository() { }
-
-        public void delete(int id)
+        private readonly CavalerasDbContext _db; 
+        public GenericRepository(CavalerasDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _db = dbContext; 
         }
 
-        public IEnumerable<T> get<T>()
+        public  async Task delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                T entity = await getById(id);
+                _db.Remove<T>(entity);
+
+                await _db.SaveChangesAsync();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
 
-        public T getById<T>(int id)
+        public async Task<IList<T>> get()
         {
-            throw new NotImplementedException();
+            return await _db.Set<T>().ToListAsync();
         }
 
-        public T insert<T>(T entity)
+        public async Task<T> getById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _db.Set<T>().Where(x => x.id == id)
+                .FirstOrDefaultAsync();
+            }
+            catch(Exception e )
+            {
+                throw e;
+            }
         }
 
-        public T update<T>(int id, T entity)
+        public async Task<T> insert(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _db.Add<T>(entity);
+                await _db.SaveChangesAsync();
+
+                return entity;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public async Task<T> update(T entity, int id)
+        {
+            try
+            {
+                _db.Update<T>(entity);
+                await _db.SaveChangesAsync();
+
+                return entity;
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
