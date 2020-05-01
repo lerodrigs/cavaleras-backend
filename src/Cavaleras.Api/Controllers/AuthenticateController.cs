@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Calaveras.Domain.Dto;
-using Microsoft.AspNetCore.Http;
+using Calaveras.Domain.Entities;
+using Cavaleras.Service.Interfaces;
+using Cavaleras.Service.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cavaleras.Api.Controllers
@@ -12,25 +12,33 @@ namespace Cavaleras.Api.Controllers
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        //[HttpPost("token")]
-        //public IActionResult token([FromBody] AuthenticateDto authenticate)
-        //{
-        //    try
-        //    {
-        //        return Ok();
-        //    }
-        //    catch(Exception e)
-        //    {
-        //        return StatusCode(500, e.Message);
-        //    }
-        //}
+        private readonly IIdentityService<User> _identityService; 
+        public AuthenticateController(IIdentityService<User> identityService)
+        {
+            _identityService = identityService;
+        }
 
-        [HttpPost("register")]
-        public IActionResult register([FromBody] RegisterUserDto registerDto)
+        [HttpPost("token")]
+        public async Task<IActionResult> token([FromBody] AuthenticateDto authenticate)
         {
             try
             {
-                return Ok();
+                AuthenticateResponseDto result = await _identityService.token<AuthenticateDtoValidator>(authenticate);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> register([FromBody] RegisterUserDto registerDto)
+        {
+            try
+            {
+                AuthenticateResponseDto result = await _identityService.register<RegisterDtoValidator>(registerDto);
+                return Ok(result);
             }
             catch(Exception e)
             {
