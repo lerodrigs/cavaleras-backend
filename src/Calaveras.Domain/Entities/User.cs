@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Calaveras.Domain.Entities
 {
-    public class User: IdentityUser<int>
+    public class User: IdentityUser
     {
         public User()
         {
@@ -14,12 +15,13 @@ namespace Calaveras.Domain.Entities
 
         public string name { get; set; }
         public string cpf { get; set; }
-        public string cellphone { get; set; }
         public string zipcode { get; set; }
         public string address { get; set; }
         public string number { get; set; }
+        public string apto { get; set; } 
         public string signature { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

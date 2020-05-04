@@ -54,7 +54,7 @@ namespace Cavaleras.Data.Repository
         {
             try
             {
-                _db.Add<T>(entity);
+                await _db.AddAsync<T>(entity);
                 await _db.SaveChangesAsync();
 
                 return entity;
@@ -69,6 +69,11 @@ namespace Cavaleras.Data.Repository
         {
             try
             {
+                if(await getById(id) == null)
+                {
+                    return await insert(entity);
+                }
+
                 _db.Update<T>(entity);
                 await _db.SaveChangesAsync();
 

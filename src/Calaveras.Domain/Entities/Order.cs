@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Calaveras.Domain.Entities
 {
@@ -11,7 +12,7 @@ namespace Calaveras.Domain.Entities
             OrderProduct = new List<OrderProduct>();
         }
 
-        public int idclient { get; set; }
+        public string idclient { get; set; }
         public int idstore { get; set; }
         public int idstatus { get; set; }
         public int iddeliveryman { get; set; }
@@ -26,11 +27,17 @@ namespace Calaveras.Domain.Entities
         public double total_price { get; set; }
         public string signature { get; set; }
         
+        [JsonIgnore]
         public virtual User Client { get; set; }
+        [JsonIgnore]
         public virtual Store Store { get; set; }        
+        [JsonIgnore]
         public virtual OrderStatus OrderStatus { get; set; }
+        [JsonIgnore]
         public virtual DeliveryMan DeliveryMan { get; set; }
+        [JsonIgnore]
         public virtual ZipCodeDeliveryPrice ZipCodeDeliveryPrice { get; set; }
+        [JsonIgnore]
         public virtual ICollection<OrderProduct> OrderProduct { get; set; }
     }
 }

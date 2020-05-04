@@ -30,7 +30,7 @@ namespace Cavaleras.Data.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder dbContextOptionsBuilder)
         {
-            dbContextOptionsBuilder.UseSqlServer("Server=localhost; Database=cavalerasdb; User Id=SA; Password=cavaleradb@1123; MultipleActiveResultSets=true;");
+            dbContextOptionsBuilder.UseSqlServer(_configuration.GetConnectionString("cavaleras"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

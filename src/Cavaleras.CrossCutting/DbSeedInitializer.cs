@@ -1,5 +1,6 @@
 ﻿using Calaveras.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,7 @@ namespace Cavaleras.CrossCutting
 {
     public static class DbSeedInitializer
     {
+        
         public static void CreateRoles(RoleManager<IdentityRole> roleManager)
         {
             List<string> roles = new List<string>()
@@ -23,14 +25,14 @@ namespace Cavaleras.CrossCutting
             {
                 if (roleManager.FindByNameAsync(role).Result == null)
                 {
-                    roleManager.CreateAsync(new IdentityRole { Name = role, NormalizedName = role });
+                    roleManager.CreateAsync(new IdentityRole { Name = role, NormalizedName = role }).Wait();
                 }
             }
         }
 
         public static void CreateAdmin(UserManager<User> userManager)
         {
-            if(userManager.FindByEmailAsync("administrador@cavalerasplace.com.br").Result == null)
+            if (userManager.FindByEmailAsync("administrador@cavalerasplace.com.br").Result == null)
             {
                 User admin = new User()
                 { 
@@ -40,7 +42,12 @@ namespace Cavaleras.CrossCutting
                     name = "Administrador",
                     PhoneNumber = "13996540909",
                     PhoneNumberConfirmed = true,
-                    UserName = "administrador@cavalerasplace.com.br"
+                    UserName = "administrador@cavalerasplace.com.br", 
+                    address = "Rua Pereira Barreto", 
+                    number = "18",
+                    apto = "46", 
+                    cpf = "44560744858", 
+                    zipcode = "11065-110"
                 };
 
                 userManager.CreateAsync(admin, "cavspls@321").Wait();

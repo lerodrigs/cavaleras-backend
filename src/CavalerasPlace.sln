@@ -15,15 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{9715AC47-6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCutting", "{2A29C890-AD8B-4524-8F5E-7A3EDB19B391}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cavaleras.Api", "Cavaleras.Api\Cavaleras.Api.csproj", "{8236641B-4161-4922-B22A-456BAD42FC81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cavaleras.Api", "Cavaleras.Api\Cavaleras.Api.csproj", "{8236641B-4161-4922-B22A-456BAD42FC81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calaveras.Domain", "Calaveras.Domain\Calaveras.Domain.csproj", "{2A51DA81-D08C-45A8-A875-FC9CD23BEE06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Calaveras.Domain", "Calaveras.Domain\Calaveras.Domain.csproj", "{2A51DA81-D08C-45A8-A875-FC9CD23BEE06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cavaleras.Service", "Cavaleras.Service\Cavaleras.Service.csproj", "{8B7541BB-0421-4477-8929-50B21F3EE887}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cavaleras.Service", "Cavaleras.Service\Cavaleras.Service.csproj", "{8B7541BB-0421-4477-8929-50B21F3EE887}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cavaleras.CrossCutting", "Cavaleras.CrossCutting\Cavaleras.CrossCutting.csproj", "{69072F4E-2663-4185-8BBE-70CF0E4F003D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cavaleras.CrossCutting", "Cavaleras.CrossCutting\Cavaleras.CrossCutting.csproj", "{69072F4E-2663-4185-8BBE-70CF0E4F003D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cavaleras.Data", "Cavaleras.Data\Cavaleras.Data.csproj", "{16A287BB-7906-497F-9706-F99F06AC60B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cavaleras.Data", "Cavaleras.Data\Cavaleras.Data.csproj", "{16A287BB-7906-497F-9706-F99F06AC60B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cavaleras.Api.Test", "Cavaleras.Api.Test\Cavaleras.Api.Test.csproj", "{DBC14DFD-C1C7-44C0-B95E-F211478269D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{16A287BB-7906-497F-9706-F99F06AC60B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16A287BB-7906-497F-9706-F99F06AC60B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A287BB-7906-497F-9706-F99F06AC60B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBC14DFD-C1C7-44C0-B95E-F211478269D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBC14DFD-C1C7-44C0-B95E-F211478269D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBC14DFD-C1C7-44C0-B95E-F211478269D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBC14DFD-C1C7-44C0-B95E-F211478269D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,6 +69,7 @@ Global
 		{8B7541BB-0421-4477-8929-50B21F3EE887} = {841EC6E9-2C38-4BB8-BF73-2FEE664F766F}
 		{69072F4E-2663-4185-8BBE-70CF0E4F003D} = {2A29C890-AD8B-4524-8F5E-7A3EDB19B391}
 		{16A287BB-7906-497F-9706-F99F06AC60B8} = {9715AC47-6054-4605-A3B7-5A4D67204F82}
+		{DBC14DFD-C1C7-44C0-B95E-F211478269D9} = {C8FBAA88-7190-48B4-91F2-BA60A92E4C47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AA3EADA-4F81-4AC1-8042-5B332CD0E5D5}

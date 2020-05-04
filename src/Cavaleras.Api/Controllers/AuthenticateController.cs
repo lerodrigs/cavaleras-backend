@@ -4,6 +4,7 @@ using Calaveras.Domain.Dto;
 using Calaveras.Domain.Entities;
 using Cavaleras.Service.Interfaces;
 using Cavaleras.Service.Validators;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cavaleras.Api.Controllers
@@ -19,11 +20,14 @@ namespace Cavaleras.Api.Controllers
         }
 
         [HttpPost("token")]
-        public async Task<IActionResult> token([FromBody] AuthenticateDto authenticate)
+        public async Task<IActionResult> token([FromBody] AuthenticateDto authenticate) 
         {
             try
             {
-                AuthenticateResponseDto result = await _identityService.token<AuthenticateDtoValidator>(authenticate);
+                await Activator.CreateInstance<AuthenticateDtoValidator>()
+                    .ValidateAndThrowAsync(authenticate); 
+
+                AuthenticateResponseDto result = await _identityService.token(authenticate);
                 return Ok(result);
             }
             catch (Exception e)
@@ -33,11 +37,30 @@ namespace Cavaleras.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> register([FromBody] RegisterUserDto registerDto)
+        public async Task<IActionResult> register([FromBody] RegisterUserDto user)
         {
             try
             {
-                AuthenticateResponseDto result = await _identityService.register<RegisterDtoValidator>(registerDto);
+                await Activator.CreateInstance<RegisterDtoValidator>()
+                    .ValidateAndThrowAsync(user);
+
+                AuthenticateResponseDto result = await _identityService.register<UserValidator>(new User()
+                {
+                    Email = user.email,
+                    address = user.address,
+                    number = user.number,
+                    apto = user.apto,
+                    zipcode = user.zipcode,
+                    cpf = user.cpf,
+                    name = user.name,
+                    PhoneNumber = user.cellphone,
+                    PhoneNumberConfirmed = true,
+                    EmailConfirmed = true,
+                    NormalizedEmail = user.email,
+                    UserName = user.email, 
+                }, 
+                user.password);
+
                 return Ok(result);
             }
             catch(Exception e)

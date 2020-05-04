@@ -1,13 +1,12 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using Calaveras.Domain.Entities;
+using Cavaleras.Api.Extensions.HealthChecks;
 using Cavaleras.CrossCutting;
 using Cavaleras.Data.Context;
-using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -16,11 +15,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cavaleras.Api
 {
@@ -48,7 +47,7 @@ namespace Cavaleras.Api
                     {
                         Email = "leandro.rodrigs11@gmail.com",
                         Name = "Leandro Rodrigues",
-                        Url = new Uri("https://github.com/lerodrigs/manager-order-delivery-backend")
+                        Url = new Uri("https://github.com/lerodrigs/cavaleras-backend")
                     },
                 });
 
@@ -66,7 +65,8 @@ namespace Cavaleras.Api
                 gen.IncludeXmlComments(xmlPath);
             });
 
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddMemoryInfoHealthCheck("memory");
 
             services.AddDbContext<CavalerasDbContext>();
             services.AddIdentity<User, IdentityRole>(configUser =>
@@ -132,12 +132,29 @@ namespace Cavaleras.Api
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseHealthChecks("/status");
-            app.UseHealthChecksUI();
+            app.UseHealthChecks("/check", new HealthCheckOptions
+            {
+                ResponseWriter = async (httpContext, healthReport) =>
+                {
+                    httpContext.Response.ContentType = "application/json";
+                    JObject json = new JObject(
+                        new JProperty("status", healthReport.Status.ToString()),
+                        new JProperty("results", new JObject(healthReport.Entries.Select(pair => 
+                            new JProperty(pair.Key, new JObject(
+                                new JProperty("status", pair.Value.Status.ToString()),
+                                new JProperty("description", pair.Value.Description), 
+                                new JProperty("data", new JObject(pair.Value.Data.Select(p => 
+                                    new JProperty(p.Key, p.Value))))))))));
 
+                    await httpContext.Response.WriteAsync(json.ToString(Formatting.Indented));
+                } 
+            });
+
+            app.UseHealthChecksUI();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
             
 

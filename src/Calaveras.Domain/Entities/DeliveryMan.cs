@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Calaveras.Domain.Entities
 {
@@ -14,6 +15,7 @@ namespace Calaveras.Domain.Entities
         public string name { get; set; }
         public bool avaliable { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
