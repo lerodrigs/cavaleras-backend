@@ -25,6 +25,7 @@ namespace Cavaleras.CrossCutting
             service.AddScoped<IGenericService<Store>, GenericService<Store>>();
             service.AddScoped<IGenericService<ZipCode>, GenericService<ZipCode>>();
             service.AddScoped<IGenericService<ZipCodeDeliveryPrice>, GenericService<ZipCodeDeliveryPrice>>();
+            service.AddScoped<IGenericRepository<Address>, GenericRepository<Address>>();
             service.AddScoped<IIdentityService<User>, IdentityService<User>>();
         }
 
@@ -38,7 +39,7 @@ namespace Cavaleras.CrossCutting
             service.AddScoped<IGenericRepository<Store>, GenericRepository<Store>>();
             service.AddScoped<IGenericRepository<ZipCode>, GenericRepository<ZipCode>>();
             service.AddScoped<IGenericRepository<ZipCodeDeliveryPrice>, GenericRepository<ZipCodeDeliveryPrice>>();
-
+            service.AddScoped<IGenericRepository<Address>, GenericRepository<Address>>();
             service.AddScoped<IIdentityRepository<User>, IdentityRepository<User>>(); 
         }
 

@@ -18,11 +18,13 @@ namespace Cavaleras.Service.Services
     public class IdentityService<T> : IIdentityService<T> where T : User
     {
         private readonly IIdentityRepository<T> _identityRepository;
+        private readonly IGenericRepository<Address> _addressRepository;
         private readonly IConfiguration _configuration; 
-        public IdentityService(IIdentityRepository<T> identityRepository, IConfiguration configuration)
+        public IdentityService(IIdentityRepository<T> identityRepository, IConfiguration configuration, IGenericRepository<Address> addressRepository)
         {
             _identityRepository = identityRepository;
             _configuration = configuration;
+            _addressRepository = addressRepository;
         }
 
         public async Task<AuthenticateResponseDto> register<V>(T user, string password) where V : AbstractValidator<T>
@@ -32,11 +34,42 @@ namespace Cavaleras.Service.Services
 
             await _identityRepository.register(user, password);
 
+            if(user.Addresses?.Count > 0)
+            {
+                foreach(Address address in user.Addresses)
+                {
+                    address.idclient = user.Id; 
+                    await Activator.CreateInstance<AddressValidator>()
+                        .ValidateAndThrowAsync(address);
+
+                    await _addressRepository.insert(address);
+                }
+            }
+
             return  new AuthenticateResponseDto()
             {
                 token = await generateToken(user.Email), 
                 expiration = DateTime.Now.AddDays(1)
             };
+        }
+
+        public async Task<User> update<V>(T user, string id) where V : AbstractValidator<T>
+        {
+            await Activator.CreateInstance<UserUpdateValidator>()
+                .ValidateAndThrowAsync(user);
+
+            if(user.Addresses?.Count > 0)
+            {
+                foreach(Address address in user.Addresses)
+                {
+                    await Activator.CreateInstance<AddressUpdateValidator>()
+                    .ValidateAndThrowAsync(address);
+
+                    await _addressRepository.update(address, address.id);
+                }
+            }
+
+            return user; 
         }
 
         public async Task<AuthenticateResponseDto> token(AuthenticateDto user) 
@@ -65,6 +98,6 @@ namespace Cavaleras.Service.Services
             );
 
             return tokenHandler.WriteToken(token);
-        }        
+        }
     }
 }

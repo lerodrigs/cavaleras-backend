@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calaveras.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,6 +7,11 @@ namespace Calaveras.Domain.Dto
 {
     public class RegisterUserDto: IDisposable
     {
+        public RegisterUserDto()
+        {
+            Addresses = new List<Address>();
+        }
+
         public string email { get; set; }
         public string password { get; set; }
         public string name { get; set; }
@@ -15,6 +21,8 @@ namespace Calaveras.Domain.Dto
         public string address { get; set; }
         public string number { get; set; }
         public string apto { get; set; }
+
+        public IList<Address> Addresses { get; set; }
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)

@@ -16,18 +16,6 @@ namespace Cavaleras.Service.Validators
                 .NotEmpty()
                 .OnAnyFailure(x => { throw new ArgumentException("Object is invalid."); });
 
-            RuleFor(x => x.address)
-                .NotNull().WithMessage("Informe o endereço do cliente")
-                .NotEmpty().WithMessage("Informe o endereço do cliente");
-
-            RuleFor(x => x.number)
-                .NotNull().WithMessage("Informe o número do endereço do cliente")
-                .NotEmpty().WithMessage("Informe o número do endereço do cliente");
-
-            RuleFor(x => x.zipcode)
-                .NotNull().WithMessage("Informe o CEP do cliente")
-                .NotEmpty().WithMessage("informe o CEP do cliente");
-
             RuleFor(x => x.name)
                 .NotNull().WithMessage("Informe o nome do cliente")
                 .NotEmpty().WithMessage("Informe o nome do cliente");

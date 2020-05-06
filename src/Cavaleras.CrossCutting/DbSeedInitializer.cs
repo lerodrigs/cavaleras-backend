@@ -43,11 +43,7 @@ namespace Cavaleras.CrossCutting
                     PhoneNumber = "13996540909",
                     PhoneNumberConfirmed = true,
                     UserName = "administrador@cavalerasplace.com.br", 
-                    address = "Rua Pereira Barreto", 
-                    number = "18",
-                    apto = "46", 
                     cpf = "44560744858", 
-                    zipcode = "11065-110"
                 };
 
                 userManager.CreateAsync(admin, "cavspls@321").Wait();

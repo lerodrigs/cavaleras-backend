@@ -13,7 +13,7 @@ namespace Cavaleras.Api.Controllers
     [ApiController]
     public class AuthenticateController : ControllerBase
     {
-        private readonly IIdentityService<User> _identityService; 
+        private readonly IIdentityService<User> _identityService;
         public AuthenticateController(IIdentityService<User> identityService)
         {
             _identityService = identityService;
@@ -37,31 +37,15 @@ namespace Cavaleras.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> register([FromBody] RegisterUserDto user)
+        public async Task<IActionResult> register([FromBody] User user)
         {
             try
             {
-                await Activator.CreateInstance<RegisterDtoValidator>()
+                await Activator.CreateInstance<UserValidator>()
                     .ValidateAndThrowAsync(user);
 
-                AuthenticateResponseDto result = await _identityService.register<UserValidator>(new User()
-                {
-                    Email = user.email,
-                    address = user.address,
-                    number = user.number,
-                    apto = user.apto,
-                    zipcode = user.zipcode,
-                    cpf = user.cpf,
-                    name = user.name,
-                    PhoneNumber = user.cellphone,
-                    PhoneNumberConfirmed = true,
-                    EmailConfirmed = true,
-                    NormalizedEmail = user.email,
-                    UserName = user.email, 
-                }, 
-                user.password);
-
-                return Ok(result);
+                AuthenticateResponseDto result = await _identityService.register<UserValidator>(user, user.password);
+                return Ok(user);
             }
             catch(Exception e)
             {

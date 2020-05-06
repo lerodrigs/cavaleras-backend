@@ -17,7 +17,8 @@ namespace Cavaleras.Data.Context
             _configuration = configuration;
         }
 
-        public DbSet<User> User { get; set; }
+        //public DbSet<User> User { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         public DbSet<Store> Stores { get; set; }
         public DbSet<DeliveryMan> DeliveryMen { get; set; }
         public DbSet<ZipCode> ZipCodes { get; set; }

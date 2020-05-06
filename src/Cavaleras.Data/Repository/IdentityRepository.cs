@@ -82,12 +82,12 @@ namespace Cavaleras.Data.Repository
             }
         }
 
-        public Task<T> update(T entity, string id)
+        public async Task<T> update(T entity, string id)
         {
             try
             {
-                _db.Set<T>().Update(entity);
-                return Task.FromResult(entity);
+                await _userManager.UpdateAsync(entity);
+                return entity;
             }
             catch(Exception e)
             {
